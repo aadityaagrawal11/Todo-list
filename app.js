@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"))  // use static css and pages
 
  mongoose.connect('mongodb://127.0.0.1:27017/todo'); // Connection to local server
- // Cluster Server mongodb+srv://aadityaagrawal11:Aditya%4004@cluster0.7wcn7ro.mongodb.net/todo
+
 
     const todoSchema = new mongoose.Schema({
         name:String,
