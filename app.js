@@ -8,12 +8,11 @@ app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"))  // use static css and pages
 
- mongoose.connect("mongodb+srv://aadityaagrawal11:Aditya%4004@cluster0.7wcn7ro.mongodb.net/todo" )
+ mongoose.connect('mongodb://127.0.0.1:27017/todo'); // Connection to local server
+ // Cluster Server mongodb+srv://aadityaagrawal11:Aditya%4004@cluster0.7wcn7ro.mongodb.net/todo
+
     const todoSchema = new mongoose.Schema({
-        name:{
-            type:String,
-            
-        }
+        name:String,
     });
 
     const Item = mongoose.model("Item", todoSchema);
@@ -59,9 +58,10 @@ app.get('/', function(req, res){
 
 // Custom List
 app.get("/:customName", function(req, res){
-const customName = req.params.customName;
 
- List.findOne({ name: customName }).then((foundlist => {
+    const customName = req.params.customName;
+     //Finfing the Custom List in the Database
+    List.findOne({ name: customName }).then((foundlist => {
     if(!foundlist){
         const list = new List({
             name: customName,
@@ -110,7 +110,7 @@ app.post('/delete', ( req, res ) => {
     }
     else{
         List.findOneAndUpdate({name:ListName},
-            {$pull:{items:{_id:selectedCheckbox}}}).then((foundList)=>{
+            { $pull : { items:{ _id:selectedCheckbox } }} ).then((foundList)=>{
                  res.redirect("/" + ListName);
         })
      }
